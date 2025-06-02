@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const authRoutes = require('./routes/authRoutes');
 const taskRoutes = require('./routes/taskRoutes');
-const { verifyToken } = require('./middleware/authMiddleware');
 const errorHandler = require('./middleware/errorHandler');
 
 dotenv.config();
