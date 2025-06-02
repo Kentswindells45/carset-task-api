@@ -25,58 +25,79 @@ The CarSet Task Management API is a backend service designed to help the CarSet 
 ### Installation
 
 1. Clone the repository:
-   ```
-   git clone https://github.com/yourusername/carset-task-api.git
+   ```bash
+   git clone https://github.com/Kentswindells45/carset-task-api.git
    cd carset-task-api
    ```
 
 2. Install dependencies:
-   ```
+   ```bash
    npm install
    ```
 
 3. Create a `.env` file in the root directory and add your MongoDB connection string and JWT secret:
-   ```
+   ```env
    MONGODB_URI=your_mongodb_connection_string
    JWT_SECRET=your_jwt_secret
+   PORT=5000
    ```
 
 ### Running the Application
 
 1. Start the server:
-   ```
+   ```bash
    npm start
    ```
 
-2. The server will run on `http://localhost:3000` (or the port specified in your code).
+2. The server will run on `http://localhost:5000` (or the port specified in your `.env` file).
 
 ## API Endpoints
 
 ### Authentication
-- **POST /auth/register**: Register a new user
-- **POST /auth/login**: Secure login for users
+- **POST /api/register**: Register a new user
+- **POST /api/login**: Secure login for users
 
 ### Task Management
-- **POST /tasks**: Create a new task
-- **GET /tasks**: Retrieve all tasks for the authenticated user
-- **PUT /tasks/:id**: Edit an existing task
-- **PATCH /tasks/:id/complete**: Mark a task as completed
-- **DELETE /tasks/:id**: Delete a task
+- **POST /api/tasks**: Create a new task (requires authentication)
+- **GET /api/tasks**: Retrieve all tasks for the authenticated user (requires authentication)
+- **PUT /api/tasks/:id**: Edit an existing task (requires authentication)
+- **PATCH /api/tasks/:id/complete**: Mark a task as completed (requires authentication)
+- **DELETE /api/tasks/:id**: Delete a task (requires authentication)
+- **POST /api/add**: Add a new task without authentication (for testing/demo)
 
 ## Usage Examples
 
 ### Register a User
 ```bash
-curl -X POST http://localhost:3000/auth/register -d '{"name": "John Doe", "email": "john@example.com", "password": "password123"}' -H "Content-Type: application/json"
+curl -X POST http://localhost:5000/api/register \
+-d '{"name": "John Doe", "email": "john@example.com", "password": "password123"}' \
+-H "Content-Type: application/json"
 ```
 
-### Create a Task
+### Login
 ```bash
-curl -X POST http://localhost:3000/tasks -d '{"title": "Verify vehicle documents", "description": "Check all necessary documents for the vehicle.", "assignedUserId": "user_id_here"}' -H "Authorization: Bearer your_jwt_token" -H "Content-Type: application/json"
+curl -X POST http://localhost:5000/api/login \
+-d '{"email": "john@example.com", "password": "password123"}' \
+-H "Content-Type: application/json"
 ```
 
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+### Create a Task (Authenticated)
+```bash
+curl -X POST http://localhost:5000/api/tasks \
+-d '{"title": "Verify vehicle documents", "description": "Check all necessary documents for the vehicle."}' \
+-H "Authorization: Bearer your_jwt_token" \
+-H "Content-Type: application/json"
+```
+
+### Add a Task Without Authentication
+```bash
+curl -X POST http://localhost:5000/api/add \
+-d '{"title": "Public Task", "description": "No auth required"}' \
+-H "Content-Type: application/json"
+```
+
+
 
 ## Acknowledgments
 - Inspired by the need for efficient task management in the luxury car rental industry.
+- Oppong Kelvin
