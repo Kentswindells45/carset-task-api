@@ -12,7 +12,6 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(verifyToken);
 
 // Routes
 app.use('/api/auth', authRoutes);
