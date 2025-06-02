@@ -1,11 +1,23 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const app = require('./src/app');
+const express = require("express");
+require("dotenv").config();
+const port = process.env.PORT || 5000;
+const mongoose = require("mongoose");
 
-dotenv.config();
+const app = express();
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+app.use(express.json());
+
+app.use("/api/auth", require("./src/routes/authRoutes"));
+app.use("/api/tasks", require("./src/routes/taskRoutes"));
+
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`Port is running on ${port}`);
+    });
+    console.log(`Database is connected on ${mongoose.connection.host}`);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
