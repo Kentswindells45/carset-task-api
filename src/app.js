@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const authRoutes = require('./routes/authRoutes');
 const taskRoutes = require('./routes/taskRoutes');
 const { verifyToken } = require('./middleware/authMiddleware');
+const errorHandler = require('./middleware/errorHandler');
 
 dotenv.config();
 
@@ -21,5 +22,8 @@ app.use('/api/tasks', taskRoutes);
 mongoose.connect(process.env.MONGODB_URI)
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.error('MongoDB connection error:', err));
+
+// Error handler middleware
+app.use(errorHandler);
 
 module.exports = app;

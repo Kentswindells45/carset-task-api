@@ -1,0 +1,8 @@
+openapi: 3.0.0
+info:
+  title: CarSet Task API
+  version: 1.0.0
+  description: API documentation for CarSet Task Management
+servers:
+  - url: http://localhost:5000/api
+paths: {}
