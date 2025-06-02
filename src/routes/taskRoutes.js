@@ -1,5 +1,6 @@
 const express = require('express');
 const { createTask, getTasks, updateTask, completeTask, deleteTask, addTask } = require('../controllers/taskController');
+const { registerUser, loginUser } = require('../controllers/authController');
 const { verifyToken } = require('../middleware/authMiddleware');
 
 const router = express.Router();
@@ -21,5 +22,9 @@ router.delete('/tasks/:id', verifyToken, deleteTask);
 
 // Add a new route for adding a task without verification
 router.post('/add', addTask);
+
+// Register and login routes without token verification
+router.post('/register', registerUser);
+router.post('/login', loginUser);
 
 module.exports = router;
