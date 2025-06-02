@@ -1,41 +1,47 @@
 # CarSet Task Management API
 
 ## Overview
-The CarSet Task Management API is a backend service designed to help the CarSet operations team manage tasks related to luxury car rentals. This API allows users to authenticate, create, retrieve, update, complete, and delete tasks efficiently.
+The CarSet Task Management API is a backend service for managing tasks related to luxury car rentals. It supports user authentication, secure task management, and robust error handling.
 
 ## Features
-- User authentication with JWT
-- Task management with CRUD operations
-- Secure password storage using hashing
+- User registration and login with JWT authentication
+- Secure password hashing with bcrypt
+- Create, retrieve, update, complete, and delete tasks (CRUD)
+- Get a single task by ID
+- Public endpoint to add a task without authentication
+- Centralized error handling middleware
+- MongoDB integration with Mongoose
 
 ## Tech Stack
 - Node.js
 - Express.js
-- MongoDB (with Mongoose)
+- MongoDB (Mongoose)
 - JSON Web Tokens (JWT)
-- Bcrypt for password hashing
+- Bcrypt
+- express-validator
 
 ## Getting Started
 
 ### Prerequisites
-- Node.js (version 14 or higher)
-- MongoDB (local or cloud instance)
-- npm (Node package manager)
+- Node.js (v14 or higher)
+- MongoDB (local or cloud)
+- npm
 
 ### Installation
 
-1. Clone the repository:
+1. **Clone the repository:**
    ```bash
    git clone https://github.com/Kentswindells45/carset-task-api.git
    cd carset-task-api
    ```
 
-2. Install dependencies:
+2. **Install dependencies:**
    ```bash
    npm install
    ```
 
-3. Create a `.env` file in the root directory and add your MongoDB connection string and JWT secret:
+3. **Configure environment variables:**  
+   Create a `.env` file in the root directory:
    ```env
    MONGODB_URI=your_mongodb_connection_string
    JWT_SECRET=your_jwt_secret
@@ -44,39 +50,52 @@ The CarSet Task Management API is a backend service designed to help the CarSet 
 
 ### Running the Application
 
-1. Start the server:
+1. **Start the server:**
    ```bash
    npm start
    ```
 
-2. The server will run on `http://localhost:5000` (or the port specified in your `.env` file).
+2. The server will run on `http://localhost:5000` (or the port specified in your `.env`).
 
 ## API Endpoints
 
 ### Authentication
-- **POST /api/register**: Register a new user
-- **POST /api/login**: Secure login for users
+- **POST /api/auth/register** — Register a new user
+- **POST /api/auth/login** — Login and receive a JWT
 
-### Task Management
-- **POST /api/tasks**: Create a new task (requires authentication)
-- **GET /api/tasks**: Retrieve all tasks for the authenticated user (requires authentication)
-- **PUT /api/tasks/:id**: Edit an existing task (requires authentication)
-- **PATCH /api/tasks/:id/complete**: Mark a task as completed (requires authentication)
-- **DELETE /api/tasks/:id**: Delete a task (requires authentication)
-- **POST /api/add**: Add a new task without authentication (for testing/demo)
+### Task Management (Protected: require JWT in `Authorization` header)
+- **POST /api/tasks** — Create a new task
+- **GET /api/tasks** — Retrieve all tasks for the authenticated user
+- **GET /api/tasks/:id** — Retrieve a single task by ID
+- **PUT /api/tasks/:id** — Update an existing task
+- **PATCH /api/tasks/:id/complete** — Mark a task as completed
+- **DELETE /api/tasks/:id** — Delete a task
 
-## Usage Examples
+### Public Task Endpoint
+- **POST /api/tasks/add** — Add a new task without authentication (for demo/testing)
+
+## Error Handling
+
+All errors are handled by a centralized error handler and returned in the following format:
+```json
+{
+  "success": false,
+  "message": "Error message here"
+}
+```
+
+## Usage Example
 
 ### Register a User
 ```bash
-curl -X POST http://localhost:5000/api/register \
+curl -X POST http://localhost:5000/api/auth/register \
 -d '{"name": "John Doe", "email": "john@example.com", "password": "password123"}' \
 -H "Content-Type: application/json"
 ```
 
 ### Login
 ```bash
-curl -X POST http://localhost:5000/api/login \
+curl -X POST http://localhost:5000/api/auth/login \
 -d '{"email": "john@example.com", "password": "password123"}' \
 -H "Content-Type: application/json"
 ```
@@ -84,20 +103,13 @@ curl -X POST http://localhost:5000/api/login \
 ### Create a Task (Authenticated)
 ```bash
 curl -X POST http://localhost:5000/api/tasks \
--d '{"title": "Verify vehicle documents", "description": "Check all necessary documents for the vehicle."}' \
+-d '{"title": "Verify vehicle documents", "description": "Check all necessary documents."}' \
 -H "Authorization: Bearer your_jwt_token" \
 -H "Content-Type: application/json"
 ```
 
-### Add a Task Without Authentication
-```bash
-curl -X POST http://localhost:5000/api/add \
--d '{"title": "Public Task", "description": "No auth required"}' \
--H "Content-Type: application/json"
-```
+## License
+MIT
 
-
-
-## Acknowledgments
-- Inspired by the need for efficient task management in the luxury car rental industry.
-- Oppong Kelvin
+---
+Oppong Kelvin
