@@ -10,13 +10,13 @@ const createTask = async (req, res) => {
             title,
             description,
             status: 'pending',
-            assignedUserId: userId,
+            user: userId, // <-- set the user field here
         });
 
         await newTask.save();
         res.status(201).json({ message: 'Task created successfully', task: newTask });
     } catch (error) {
-        res.status(500).json({ message: 'Error creating task', error: error.message });
+        res.status(400).json({ message: 'Error creating task', error: error.message });
     }
 };
 
