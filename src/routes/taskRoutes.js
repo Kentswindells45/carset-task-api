@@ -1,5 +1,5 @@
 const express = require('express');
-const { createTask, getTasks, updateTask, completeTask, deleteTask, addTask } = require('../controllers/taskController');
+const { createTask, getTasks, updateTask, completeTask, deleteTask, addTask, getTaskById } = require('../controllers/taskController');
 const { registerUser, loginUser } = require('../controllers/authController');
 const { verifyToken } = require('../middleware/authMiddleware');
 const { body, validationResult } = require('express-validator');
@@ -39,5 +39,8 @@ router.post('/register', [
 
 // Login route without token verification
 router.post('/login', loginUser);
+
+// Get a single task by ID
+router.get('/:id', verifyToken, getTaskById);
 
 module.exports = router;

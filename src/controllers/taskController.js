@@ -32,6 +32,22 @@ const getTasks = async (req, res) => {
     }
 };
 
+// Get a single task by ID
+const getTaskById = async (req, res) => {
+    const { id } = req.params;
+    const userId = req.user.id;
+
+    try {
+        const task = await Task.findOne({ _id: id, user: userId });
+        if (!task) {
+            return res.status(404).json({ message: 'Task not found' });
+        }
+        res.status(200).json({ success: true, data: task, message: 'Task retrieved' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error retrieving task', error: error.message });
+    }
+};
+
 // Update an existing task
 const updateTask = async (req, res) => {
     const { id } = req.params;
@@ -106,6 +122,7 @@ const addTask = async (req, res) => {
 module.exports = {
     createTask,
     getTasks,
+    getTaskById, // <-- add this
     updateTask,
     completeTask,
     deleteTask,
