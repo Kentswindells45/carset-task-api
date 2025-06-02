@@ -1,30 +1,3 @@
-# CarSet Task Management API
-
-## Overview
-The CarSet Task Management API is a backend service for managing tasks related to luxury car rentals. It supports user authentication, secure task management, and robust error handling.
-
-## Features
-- User registration and login with JWT authentication
-- Secure password hashing with bcrypt
-- Create, retrieve, update, complete, and delete tasks (CRUD)
-- Get a single task by ID
-- Public endpoint to add a task without authentication
-- Centralized error handling middleware
-- MongoDB integration with Mongoose
-
-## Tech Stack
-- Node.js
-- Express.js
-- MongoDB (Mongoose)
-- JSON Web Tokens (JWT)
-- Bcrypt
-- express-validator
-
-## Getting Started
-
-### Prerequisites
-- Node.js (v14 or higher)
-- MongoDB (local or cloud)
 - npm
 
 ### Installation
@@ -43,8 +16,8 @@ The CarSet Task Management API is a backend service for managing tasks related t
 3. **Configure environment variables:**  
    Create a `.env` file in the root directory:
    ```env
-   MONGODB_URI=your_mongodb_connection_string
-   JWT_SECRET=your_jwt_secret
+   MONGODB_URI=mongodb://127.0.0.1:27017/carset-task-api
+   JWT_SECRET=SECRET_KEY
    PORT=5000
    ```
 
